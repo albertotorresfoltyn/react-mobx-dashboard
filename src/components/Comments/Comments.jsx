@@ -9,10 +9,10 @@ export default function Comments() {
         <table className="comments-table">
             <tbody>
                 {
-                    store.comments.map((comment, index) => ((
+                    store.Widgets.map((comment, index) => ((
                         <tr key={index}>
                             <td>
-                                {comment}
+                                {JSON.stringify(comment)}
                             </td>
                         </tr>
                     )))
