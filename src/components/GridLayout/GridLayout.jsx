@@ -9,16 +9,15 @@ const ReactGridLayout = WidthProvider(RGL);
  class BasicLayout extends React.PureComponent {
   static defaultProps = {
     className: "layout",
-    items: 10,
+    items: 5,
     rowHeight: 30,
     onLayoutChange: function() {},
     cols: 3
   };
 
   constructor(props) {
-    super(props);
-
-    const layout = this.generateLayout();
+    super(props);debugger;
+    const layout = this.props.grid || this.generateLayout();
     this.state = { layout };
   }
 
@@ -52,6 +51,12 @@ const ReactGridLayout = WidthProvider(RGL);
     this.props.onLayoutChange(layout);
   }
 
+  componentWillReceiveProps(newProps) {
+    if (newProps.grid) {debugger;
+      this.props.layout = newProps.grid
+    }
+  }
+
   render() {
     return (
       <ReactGridLayout
@@ -71,7 +76,7 @@ export default function GridLayout() {
   console.log(store)
   return (
       useObserver(() => {
-        return <BasicLayout></BasicLayout>
+        return <BasicLayout grid = {store.Widget}></BasicLayout>
       }
     )
   )
