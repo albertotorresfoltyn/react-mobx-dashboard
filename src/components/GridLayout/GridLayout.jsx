@@ -1,7 +1,4 @@
 import React from "react";
-import Count from "./Count";
-import Buttons from "./Buttons";
-import imageStore from '../store/ImageStore'
 import { useObserver } from "mobx-react";
 import _ from "lodash";
 import RGL, { WidthProvider } from "react-grid-layout";
@@ -27,7 +24,7 @@ const ReactGridLayout = WidthProvider(RGL);
   generateDOM() {
     return _.map(_.range(this.props.items), function(i) {
       return (
-        <div key={i}>
+        <div key={i} className="grid-item">
           <span className="text">{i}</span>
         </div>
       );
@@ -55,6 +52,7 @@ const ReactGridLayout = WidthProvider(RGL);
   render() {
     return (
       <ReactGridLayout
+        className="grid-layout"
         layout={this.state.layout}
         onLayoutChange={this.onLayoutChange}
         {...this.props}
@@ -64,15 +62,9 @@ const ReactGridLayout = WidthProvider(RGL);
     );
   }
 }
-/*
-if (process.env.STATIC_EXAMPLES === true) {
-  import("../test-hook.jsx").then(fn => fn.default(BasicLayout));
-}*/
 
-export default function Card() {
+export default function GridLayout() {
     return (
-        useObserver(() => (<BasicLayout></BasicLayout>
-            
-        ))
+        useObserver(() => (<BasicLayout></BasicLayout>))
     );
 }

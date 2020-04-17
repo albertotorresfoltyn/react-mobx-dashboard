@@ -1,0 +1,9 @@
+.react-grid-layout .grid-item {
+    border: 1px solid;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    color:#339AF0;
+    font-size: 2rem;
+}

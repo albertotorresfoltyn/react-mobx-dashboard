@@ -2,7 +2,8 @@ import React, { useContext } from "react";
 import { StoreContext } from '../main'
 
 export default function Buttons() {
-    const store = useContext(StoreContext)
+    const store = useContext(StoreContext);
+
     return (
         <div className="row">
             <div className="col-sm">

@@ -1,7 +1,6 @@
 import { action, runInAction, observable } from "mobx";
 
 class ImageStore {
-    
     id = 1
 
     @observable imageUrl = `https://rickandmortyapi.com/api/character/avatar/1.jpeg`

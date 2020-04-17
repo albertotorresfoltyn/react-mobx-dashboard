@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { useObserver } from 'mobx-react';
-import { StoreContext } from '../main'
+import { StoreContext } from '../../main'
 
 export default function Count() {
     const store = useContext(StoreContext)
@@ -11,7 +11,7 @@ export default function Count() {
             </div>
             <div className="col-sm" align="right">
                 {store.commentsCount} comments
+            </div>
         </div>
-        </div>
-    ))
+    ));
 }
