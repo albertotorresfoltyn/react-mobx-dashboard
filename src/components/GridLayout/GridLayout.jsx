@@ -17,23 +17,24 @@ const ReactGridLayout = WidthProvider(RGL);
 
   constructor(props) {
     super(props);debugger;
-    const layout = this.props.grid || this.generateLayout();
+    const layout = this.props.grid //|| this.generateLayout();
     this.state = { layout };
   }
 
   generateDOM() {
-    return _.map(_.range(this.props.items), function(i) {
+    debugger;
+    return _.map(_.range(this.state.layout.length), function(i) {
       return (
         <div key={i} className="grid-item">
-          <span className="text">{i}</span>
+          <span className="text">{this.state.layout[i]}</span>
         </div>
       );
     });
   }
 
-  generateLayout() {
+  /*generateLayout() {
     const p = this.props;
-    const arr = _.map(new Array(p.items), function(item, i) {
+    const arr = _.map(new Array(p.layout), function(item, i) {
       const y = _.result(p, "y") || Math.ceil(Math.random() * 4) + 1;
       return {
         x: (i * 2) % 12,
@@ -45,7 +46,7 @@ const ReactGridLayout = WidthProvider(RGL);
     });
     console.log(arr);
     return arr;
-  }
+  }*/
 
   onLayoutChange(layout) {
     this.props.onLayoutChange(layout);
