@@ -16,17 +16,20 @@ const ReactGridLayout = WidthProvider(RGL);
   };
 
   constructor(props) {
-    super(props);debugger;
-    const layout = this.props.grid //|| this.generateLayout();
+    super(props);
+
+    const layout = this.props.grid.map((item, i) => ({...item, i: i.toString()})); //|| this.generateLayout();
+
     this.state = { layout };
   }
 
   generateDOM() {
-    debugger;
-    return _.map(_.range(this.state.layout.length), function(i) {
+    const { layout } = this.state;
+
+    return _.map(_.range(layout && layout.length), (i) => {
       return (
         <div key={i} className="grid-item">
-          <span className="text">{this.state.layout[i]}</span>
+          <span className="text">{layout[i].title}</span>
         </div>
       );
     });
@@ -34,7 +37,7 @@ const ReactGridLayout = WidthProvider(RGL);
 
   /*generateLayout() {
     const p = this.props;
-    const arr = _.map(new Array(p.layout), function(item, i) {
+    const arr = _.map(new Array(10), function(item, i) {
       const y = _.result(p, "y") || Math.ceil(Math.random() * 4) + 1;
       return {
         x: (i * 2) % 12,
@@ -44,7 +47,7 @@ const ReactGridLayout = WidthProvider(RGL);
         i: i.toString()
       };
     });
-    console.log(arr);
+    console.log(JSON.stringify(arr));
     return arr;
   }*/
 
@@ -53,7 +56,8 @@ const ReactGridLayout = WidthProvider(RGL);
   }
 
   componentWillReceiveProps(newProps) {
-    if (newProps.grid) {debugger;
+    if (newProps.grid) {
+      debugger;
       this.props.layout = newProps.grid
     }
   }
@@ -62,7 +66,7 @@ const ReactGridLayout = WidthProvider(RGL);
     return (
       <ReactGridLayout
         className="grid-layout"
-        layout={this.state.layout}
+        layout={ this.state.layout }
         onLayoutChange={this.onLayoutChange}
         {...this.props}
       >
@@ -77,7 +81,7 @@ export default function GridLayout() {
   console.log(store)
   return (
       useObserver(() => {
-        return <BasicLayout grid = {store.Widget}></BasicLayout>
+        return <BasicLayout grid = {store.Widgets}></BasicLayout>
       }
     )
   )
