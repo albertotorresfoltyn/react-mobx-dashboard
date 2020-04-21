@@ -1,6 +1,7 @@
-import React, { useContext } from 'react';
-import { StoreContext } from '../../main';
+import React from 'react';
+import { StoreContext } from '../main';
 import { useObserver } from 'mobx-react';
+import { useContext } from 'react';
 
 export default function Comments() {
     const store = useContext(StoreContext);
@@ -9,7 +10,7 @@ export default function Comments() {
         <table className="comments-table">
             <tbody>
                 {
-                    store.Widgets.map((comment, index) => ((
+                    store.widgets.map((comment, index) => ((
                         <tr key={index}>
                             <td>
                                 {JSON.stringify(comment)}

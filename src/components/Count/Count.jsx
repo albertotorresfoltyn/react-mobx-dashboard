@@ -1,9 +1,11 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { useObserver } from 'mobx-react';
-import { StoreContext } from '../../main'
+import { StoreContext } from '../main';
+import { useContext } from 'react';
 
 export default function Count() {
-    const store = useContext(StoreContext)
+    const store = useContext(StoreContext);
+
     return useObserver(() => (
         <div className="row reactions-count" >
             <div className="col-sm" align="left">

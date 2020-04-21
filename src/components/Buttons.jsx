@@ -1,5 +1,6 @@
-import React, { useContext } from "react";
-import { StoreContext } from '../main'
+
+import { StoreContext } from '../main';
+import { useContext } from 'react';
 
 export default function Buttons() {
     const store = useContext(StoreContext);

@@ -1,0 +1,58 @@
+/* The sidebar menu */
+.sidebar {
+    background-color: #F0F0F0;
+    padding-top: 20px;
+    display: inline-block;
+    width: 0;
+    transition: width 400ms ease-out;
+}
+
+.content.sidebar-visible .sidebar {
+    /*width: 420px;*/
+    width: 30%;
+}
+
+.content.sidebar-visible .main {
+    /*width: 420px;*/
+    width: 70%;
+}
+
+/* The navigation menu links */
+.sidebar a {
+    padding: 6px 8px 6px 16px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #111;
+    display: block;
+}
+
+/* When you mouse over the navigation links, change their color */
+.sidebar a:hover {
+    color: #f1f1f1;
+}
+
+/* Style page content */
+.main {
+    transition: width 400ms ease-out;
+    padding: 0px 10px;
+    /*width: 70%;*/
+    width: 100%;
+    text-align: left;
+    margin: 0 !important;
+    overflow: hidden;
+    display: inline-block;
+}
+
+/* On smaller screens, where height is less than 450px, change the style of the sidebar (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+    .sidebar {padding-top: 15px;}
+    .sidebar a {font-size: 18px;}
+}
+
+.content {
+    height: 100%;
+    display: block;
+    align-items: start;
+    justify-content: start;
+    display: flex;
+}

@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import './css/main.css'
-import Dashboard from "./components/Dashboard";
+import Dashboard from "./components/Dashboard/Dashboard";
 import storeInstance from './store/Store'
 
 export const StoreContext = React.createContext();

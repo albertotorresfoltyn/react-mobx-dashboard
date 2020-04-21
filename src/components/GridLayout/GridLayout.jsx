@@ -1,31 +1,23 @@
-import React, { useContext } from 'react';
-import { useObserver } from "mobx-react";
-import { StoreContext } from '../../main';
+import React from 'react';
+import { useObserver, Observer } from "mobx-react";
 import _ from "lodash";
 import RGL, { WidthProvider } from "react-grid-layout";
+import { StoreContext } from '../../main';
+import { useContext } from 'react';
+import { observe } from "mobx"
 
 const ReactGridLayout = WidthProvider(RGL);
 
- class BasicLayout extends React.PureComponent {
-  static defaultProps = {
-    className: "layout",
-    items: 5,
-    rowHeight: 30,
-    onLayoutChange: function() {},
-    cols: 3
-  };
-
+export class BasicLayout extends React.Component {
   constructor(props) {
     super(props);
 
-    const layout = this.props.grid.map((item, i) => ({...item, i: i.toString()})); //|| this.generateLayout();
-
-    this.state = { layout };
+    observe(props.grid, newValue => {
+      debugger;
+    });
   }
 
-  generateDOM() {
-    const { layout } = this.state;
-
+  generateDOM(layout) {
     return _.map(_.range(layout && layout.length), (i) => {
       return (
         <div key={i} className="grid-item">
@@ -35,54 +27,37 @@ const ReactGridLayout = WidthProvider(RGL);
     });
   }
 
-  /*generateLayout() {
-    const p = this.props;
-    const arr = _.map(new Array(10), function(item, i) {
-      const y = _.result(p, "y") || Math.ceil(Math.random() * 4) + 1;
-      return {
-        x: (i * 2) % 12,
-        y: Math.floor(i / 6) * y,
-        w: 2,
-        h: y,
-        i: i.toString()
-      };
-    });
-    console.log(JSON.stringify(arr));
-    return arr;
-  }*/
-
-  onLayoutChange(layout) {
-    this.props.onLayoutChange(layout);
+  componentWillReceiveProps() {
+    debugger;
   }
 
-  componentWillReceiveProps(newProps) {
-    if (newProps.grid) {
-      debugger;
-      this.props.layout = newProps.grid
-    }
+  onLayoutChange(layout) {
+    //
   }
 
   render() {
+    const { grid } = this.props;
+    const gridLayout = grid && grid.map((item, i) => ({...item, i: i.toString()})) || [];
+
     return (
       <ReactGridLayout
         className="grid-layout"
-        layout={ this.state.layout }
+        layout={ gridLayout }
         onLayoutChange={this.onLayoutChange}
-        {...this.props}
+        cols= { 3 }
+        rowHeight = { 30 }
       >
-        {this.generateDOM()}
+        {this.generateDOM(gridLayout)}
       </ReactGridLayout>
     );
   }
 }
 
+
 export default function GridLayout() {
   const store = useContext(StoreContext);
-  console.log(store)
+
   return (
-      useObserver(() => {
-        return <BasicLayout grid = {store.Widgets}></BasicLayout>
-      }
-    )
-  )
+  <Observer>{() => <BasicLayout grid={store.widgets}></BasicLayout>}</Observer>
+  );
 }
