@@ -1,20 +1,39 @@
 /* The sidebar menu */
 .sidebar {
-    background-color: #F0F0F0;
+    text-align: left;
+    padding: 24px;
+    width: 420px;
+    border: 2px solid #DFDFE4;
+    border-right: 0;
     padding-top: 20px;
     display: inline-block;
-    width: 0;
-    transition: width 400ms ease-out;
+    transition: all 200ms ease-out;
+    z-index: 10;
+
+    height: 100%;
+    position: fixed;
+    right: -420px;
 }
 
 .content.sidebar-visible .sidebar {
     /*width: 420px;*/
-    width: 30%;
+    /*width: 30%;*/
+    right: 0px;
+
+}
+
+.sidebar .widget-container {
+    margin: 24px 0;
+    border-bottom: 2px solid #DFDFE4;
+    padding-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .content.sidebar-visible .main {
     /*width: 420px;*/
-    width: 70%;
+    width: calc(100% - 420px);
 }
 
 /* The navigation menu links */
@@ -24,6 +43,10 @@
     font-size: 25px;
     color: #111;
     display: block;
+}
+
+.sidebar .widget-container:hover {
+    cursor: pointer;
 }
 
 /* When you mouse over the navigation links, change their color */
@@ -55,4 +78,24 @@
     align-items: start;
     justify-content: start;
     display: flex;
+}
+
+
+.header {
+    margin: 24px;
+    margin-right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header .buttons-container button {
+    background-color: #545CA5;
+    color: #fff;
+    padding: 8px 16px;
+    font-size: 20px;
+}
+
+.header .buttons-container {
+    text-align: right;
 }

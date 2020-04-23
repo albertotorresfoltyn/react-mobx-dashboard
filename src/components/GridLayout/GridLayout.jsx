@@ -1,10 +1,6 @@
 import React from 'react';
-import { useObserver, Observer } from "mobx-react";
 import _ from "lodash";
 import RGL, { WidthProvider } from "react-grid-layout";
-import { StoreContext } from '../../main';
-import { useContext } from 'react';
-import { observe } from "mobx"
 
 const ReactGridLayout = WidthProvider(RGL);
 
@@ -12,9 +8,9 @@ export class BasicLayout extends React.Component {
   constructor(props) {
     super(props);
 
-    observe(props.grid, newValue => {
-      debugger;
-    });
+    this.state = {
+      store: props.store
+    };
   }
 
   generateDOM(layout) {
@@ -27,13 +23,16 @@ export class BasicLayout extends React.Component {
     });
   }
 
-  componentWillReceiveProps() {
-    debugger;
-  }
-
   onLayoutChange(layout) {
     //
   }
+
+  onDrop = elemParams => {
+    this.state.store.addDraggedWidget({
+      x: elemParams.x,
+      y: elemParams.y
+    });
+  };
 
   render() {
     const { grid } = this.props;
@@ -43,21 +42,19 @@ export class BasicLayout extends React.Component {
       <ReactGridLayout
         className="grid-layout"
         layout={ gridLayout }
-        onLayoutChange={this.onLayoutChange}
+        width= { 500 }
+        onLayoutChange={ this.onLayoutChange }
         cols= { 3 }
         rowHeight = { 30 }
+        useCSSTransforms = {false}
+        measureBeforeMount = { false }
+        onDrop = {this.onDrop}
+        isDroppable = { true }
+        // compactType = "horizontal"
+        droppingItem = { { w: 2, h: 4, i: (gridLayout.length + 1).toString() } }
       >
         {this.generateDOM(gridLayout)}
       </ReactGridLayout>
     );
   }
-}
-
-
-export default function GridLayout() {
-  const store = useContext(StoreContext);
-
-  return (
-  <Observer>{() => <BasicLayout grid={store.widgets}></BasicLayout>}</Observer>
-  );
 }
