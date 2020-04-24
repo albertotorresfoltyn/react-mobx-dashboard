@@ -14,40 +14,56 @@ export default function Dashboard() {
       }, t)
     }
   };
+  const triggerAddButton = () => {
+    store.toggleSidebar();
+    triggerResizeGradually();
+  }
+
+  const enableEditPanel = () => {
+    store.toggleSidebar();
+    triggerResizeGradually();
+  }
+
+  const showProperSidebar = () => {
+    return <>
+      <h1>Add widget</h1>
+      <p>Click add or drag a widget to the left side of the screen to add it to your dashboard.</p>
+      {sidebarWidgets.map((widget, i) => {
+         return <SidebarWidget widgetName={ widget } store={store} key={i}/>
+      })}
+    </>
+  }
 
   return (
     <div className="container-md" align="center">
       <div className="header">
         <h1>Dashboard name</h1>
         <div className="col-sm buttons-container">
-            <button type="button" className="btn btn-light" onClick={() => {
-              store.toggleSidebar();
-              triggerResizeGradually();
-            }}>Add widget</button>
+            <button type="button" className="btn btn-light" onClick={triggerAddButton}>Add widget</button>
         </div>
       </div>
       <Observer>{() =>
         <div className={`content ${store.showSidebar ? "sidebar-visible" : ""}`}>
           <h1 style={{display: 'none'}}>{ store.widgets.length }</h1>
-
           <div className="main">
-            <BasicLayout grid={store.widgets} store={store}></BasicLayout>
+            <BasicLayout grid={store.widgets} store={store} enableEditPanel={enableEditPanel}></BasicLayout>
           </div>
-          <div className='sidebar'>
-            <h1>Add widget</h1>
-            <p>Click add or drag a widget to the left side of the screen to add it to your dashboard.</p>
+          <Sidebar>
             {
-              sidebarWidgets.map((widget, i) => {
-                return <SidebarWidget widgetName={ widget } store={store} key={i}/>
-              })
+              showProperSidebar()
             }
-          </div>
+          </Sidebar>
         </div>
       }
       </Observer>
     </div>
   );
 }
+
+const Sidebar = ({Widgets, store, children}) => (<div className='sidebar'>
+  {children}
+  </div>
+);
 
 const SidebarWidget = ({ widgetName, store }) => ((
     <div className="widget-container droppable-element"

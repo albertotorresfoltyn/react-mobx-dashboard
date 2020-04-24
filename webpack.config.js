@@ -40,7 +40,21 @@ module.exports = {
                     "style-loader", // creates style nodes from JS strings
                     "css-loader", // translates CSS into CommonJS
                 ]
+            },{
+                test: /\.ts(x?)$/,
+                exclude: /node_modules/,
+                use: [
+                    {
+                        loader: "ts-loader"
+                    }
+                ]
             },
+            // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
+            {
+                enforce: "pre",
+                test: /\.js$/,
+                loader: "source-map-loader"
+            }
         ]
     },
     plugins: [

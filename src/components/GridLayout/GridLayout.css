@@ -7,3 +7,11 @@
     color:#339AF0;
     font-size: 2rem;
 }
+
+.react-grid-item > .react-edit-handle {
+    position: absolute;
+    border: 0;
+    top: 0;
+    font-size: 1.5rem;
+    right: 0;
+}
