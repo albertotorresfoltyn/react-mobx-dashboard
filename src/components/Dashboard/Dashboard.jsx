@@ -14,24 +14,48 @@ export default function Dashboard() {
       }, t)
     }
   };
+
   const triggerAddButton = () => {
     store.toggleSidebar();
     triggerResizeGradually();
   }
 
-  const enableEditPanel = () => {
+  const enableEditPanel = (w) => {
+    if ((store.editingWidget) && (w !== store.editingWidget.id)) {
+      alert('close the edit panel before changing the leement');
+      return;
+    } else if ((store.editingWidget) && (w === store.editingWidget.id)) {
+      store.toggleSidebar();
+      store.setEditWidget(null);
+      triggerResizeGradually();
+      return;
+    }
     store.toggleSidebar();
+    store.setEditWidget(w);
     triggerResizeGradually();
   }
 
+  const changeProperty = (propName, value) => {
+    store.changeProperty(propName, value);
+  }
+
   const showProperSidebar = () => {
-    return <>
-      <h1>Add widget</h1>
-      <p>Click add or drag a widget to the left side of the screen to add it to your dashboard.</p>
-      {sidebarWidgets.map((widget, i) => {
-         return <SidebarWidget widgetName={ widget } store={store} key={i}/>
-      })}
+    if (!store.editingWidget){
+      return <>
+        <h1>Add widget</h1>
+        <p>Click add or drag a widget to the left side of the screen to add it to your dashboard.</p>
+        {sidebarWidgets.map((widget, i) => {
+          return <SidebarWidget widgetName={ widget } store={store} key={i}/>
+        })}
+      </>
+    } else {
+      return <>
+      <h1>Edit widget</h1>
+      <p>Set widget title and url.</p>
+      <input placeholder="Title for widget" type="text" id="title" value={store.editingWidget.title} onChange={(event)=>{changeProperty('title', event.target.value)}}/>
+      <input placeholder="URL" type="text" value={store.editingWidget.url} onChange={(event)=>{changeProperty('url', event.target.value)}}/>
     </>
+    }
   }
 
   return (

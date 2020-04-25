@@ -21,16 +21,15 @@ export class BasicLayout extends React.Component {
     return _.map(_.range(layout && layout.length), (i) => {
       return (
         <div key={i} className="grid-item">
+          <span className="text">{layout[i].title}</span>
           <div className="react-edit-handle">
-            <button type="button" className="btn btn-light" onClick={() => {debugger;this.props.enableEditPanel();
-              /*const store = useContext(StoreContext);
-              store.toggleSidebar();
-              triggerResizeGradually();*/
-            }}>
+            <button type="button" className="btn btn-light" onClick={() => {
+              this.props.enableEditPanel(layout[i].id);
+            }}> 
               <FontAwesomeIcon icon={faPencilAlt} size="xs" />
             </button>
           </div>
-          <span className="text">{layout[i].title}</span>
+          <div className="page-container"><iframe src={layout[i].url}></iframe></div>
         </div>
       );
     });

@@ -1,22 +1,20 @@
 import { observable, action, computed } from 'mobx';
-
+import uid from 'uid';
 class Store {
     @observable widgets = [
-        { x: 0, y: 0, w: 1, h: 5, minH: 2, maxH: 5, title: "Title W1" },
-        { x: 4, y: 2, w: 3, h: 5, minH: 2, maxH: 5, title: "Title W2" },
-        { x: 6, y: 2, w: 2, h: 5, minH: 2, maxH: 5, title: "Title W3" },
-        { x: 8, y: 2, w: 2, h: 5, minH: 2, maxH: 5, title: "Title W4" },
-        { x: 10, y: 2, w: 2, h: 2, minH: 2, maxH: 5, title: "Title W5" },
-        { x: 0, y: 3, w: 2, h: 3, minH: 2, maxH: 5, title: "Title W6" },
-        { x: 2, y: 5, w: 2, h: 5, minH: 2, maxH: 5, title: "Title W7" },
-        { x: 4, y: 4, w: 2, h: 4, minH: 2, maxH: 5, title: "Title W8" },
-        { x: 6, y: 2, w: 2, h: 2, minH: 2, maxH: 5, title: "Title W9"}
+        { x: 0, y: 0, w: 1, h: 5, minH: 2, maxH: 5, title: "Title W1", id: uid(32), url: 'http://www.google.com'},
+        { x: 4, y: 2, w: 3, h: 5, minH: 2, maxH: 5, title: "Title W2", id: uid(32), url: 'http://www.facebook.com'},
+        { x: 6, y: 2, w: 2, h: 5, minH: 2, maxH: 5, title: "Title W3", id: uid(32), url: 'http://www.xkcd.com'},
+        { x: 8, y: 2, w: 2, h: 5, minH: 2, maxH: 5, title: "Title W4", id: uid(32), url: 'http://imdb.com'},
+        { x: 10, y: 2, w: 2, h: 2, minH: 2, maxH: 5, title: "Title W5", id: uid(32), url: 'http://www.dmi.dk'},
     ];
     @observable showSidebar = false;
+    @observable editingWidget;
     draggingWidget = '';
 
     @action addWidgetAtFirstPosition(widgetTitle) {
         this.widgets.unshift({
+            id: uid(32),
             x: 0,
             y: 0,
             w: 2,
@@ -122,16 +120,12 @@ class Store {
         this.showSidebar = !this.showSidebar;
     }
 
-    @action updateCount() {
-        this.likesCount++;
+    @action setEditWidget(widgetId) {
+        this.editingWidget = this.widgets.find((w)=>w.id===widgetId);
     }
 
-    @action postComment(comment) {
-        this.comments.push(comment)
-    }
-
-    @computed get commentsCount() {
-        return this.comments.length;
+    @action changeProperty(propName, value) {
+        this.editingWidget[propName] = value;
     }
 
 }
